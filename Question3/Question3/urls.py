@@ -15,7 +15,26 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from TP2Q3 import views
+from django.conf.urls.static import *
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-]
+
+    path('home/'),
+
+    path('home/car'),
+
+    path('home/car/<int:carID>',views.CarByID,name='CarByID'),
+
+    path('home/car/<str:manufacturer>',views.CarByManufacturer,name='CarByManufacturer'),
+
+    path('home/bill'),
+
+    path('home/bill/<int:billID>',views.BillByID,name="BillByID"),
+
+    path('home/bill/<str:client>',views.BillByClient,name='BillByClient')
+
+
+]+ static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

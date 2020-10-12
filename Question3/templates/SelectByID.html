@@ -1,0 +1,36 @@
+{% extends 'MenuBar.html' %}
+{% block maincontent %}
+
+    <h1>{% block selectByIDTitle %}{% endblock %}</h1>
+
+    <br>
+
+    <form method="get" id={% block formID %}{% endblock %}>
+
+        <div class="form-group">
+            <label for="IDInputLabel">{% block idInputLabel %}{% endblock %}</label>
+            <input type="number" class="form-text" id={% block idInputID %}{% endblock %} aria-describedby="Insert_ID_Here" min="0">
+            <small id="IDHelp" class="form-text text-muted">{% block idHelpMessage %}{% endblock %}</small>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Submit</button>
+
+    </form>
+
+    <table class="table table-sm responsive">
+      <thead>
+        <tr>
+
+            {% block tableColumnName %}
+            {% endblock %}
+        </tr>
+      </thead>
+      <tbody>
+
+            {% block tableBody %}
+            {% endblock %}
+
+      </tbody>
+    </table>
+
+{% endblock %}
