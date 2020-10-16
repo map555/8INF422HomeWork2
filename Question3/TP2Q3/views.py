@@ -13,20 +13,25 @@ def CarByIDHome(request):
 
 def get_car_info_by_id(request):
     if request.method == "GET" and request.is_ajax():
-        carID=request.GET.get("car_id")
-        testQuery=Car.objects.filter(id=carID).values('model')
 
-        if(len(testQuery)!=0):
-            car = Car.objects.get(id=carID)
-            car_info={'manufacturer':car.manufacturer,
-                    'model':car.model,
-                    'cartrim':car.trim,
-                    'mileage':car.mileage,
-                    'caryear':car.year,
-                    'carweight':car.weight,
-                    'condition':car.condition,
-                    'carcolor':car.color,
-                    'price':car.price}
+        requestCar=None
+
+        #try to get the car
+        try:
+            requestCar=Car.objects.get(id=request.GET.get("car_id"),sold=False)
+        except(ObjectDoesNotExist):
+            requestCar=None
+
+        if(requestCar!=None):
+            car_info={'manufacturer':requestCar.manufacturer,
+                    'model':requestCar.model,
+                    'cartrim':requestCar.trim,
+                    'mileage':requestCar.mileage,
+                    'caryear':requestCar.year,
+                    'carweight':requestCar.weight,
+                    'condition':requestCar.condition,
+                    'carcolor':requestCar.color,
+                    'price':requestCar.price}
         else:
             car_info = {'manufacturer': "NULL",
                         'model': "NULL",

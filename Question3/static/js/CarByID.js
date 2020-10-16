@@ -1,18 +1,22 @@
-
-
 $(document).ready(function (){
 
-         //Get query result on submit
+
+
+                  //Get query result on submit
             $('#send_car_id').on('click', function(e){
+
+
                 e.preventDefault();
                 var car_id=document.getElementById("car_id").value;
 
-                console.log(car_id)
                 $.ajax({
                         type: "GET",
                         url:"{% url 'get_car_info_by_id' %}",
                         data: {car_id:car_id},
                         success:function(response){
+
+                            response.car_info.condition=getConditionValue(response.car_info.condition)
+
                             console.log("It works")
                             $("#resulttable tbody").html(`<tr>
                                 <td id="manufacturerResult">${response.car_info.manufacturer}</td>
@@ -33,6 +37,29 @@ $(document).ready(function (){
                          }
             })
             })
+        });
 
-
-    });
+function getConditionValue(conditionIndex){
+        var conditionvalue;
+        switch (conditionIndex){
+            case "1":
+                conditionvalue="very bad";
+                break;
+            case "2":
+                conditionvalue="bad";
+                break;
+            case "3":
+                conditionvalue="normal";
+                break;
+            case "4":
+                conditionvalue="good";
+                break;
+            case "5":
+                conditionvalue="very good";
+                break;
+            case "6":
+                conditionvalue="showroom";
+                break;
+        }
+        return conditionvalue
+    }

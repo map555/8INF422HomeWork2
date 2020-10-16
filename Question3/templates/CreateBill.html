@@ -18,62 +18,62 @@
 
 {% block submitButtonID %}send_form_button {% endblock %}
 
-
-
 {% block scriptBlock %}
-    <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
+    <script>
 
-    <script type="text/javascript">
-        $(document).ready(function(){
-            $("#bill_form").submit(function (e){
 
-                e.preventDefault();
+        $(document).ready(function (){
 
-                //serialize form
-                var serForm=$(this).serialize();
+                    $("#bill_form").submit(function (e){
 
-                $.ajax({
-                    type:'POST',
-                    url: "{% url 'post_bill' %}",
-                    data: serForm,
-                    success:function (response){
-                        //reset form
-                        $("#bill_form")[0].reset();
+                    e.preventDefault();
 
-                        alert("SUCCESS\nBill added with success.")
-                        console.log("Bill added")
+                    //serialize form
+                    var serForm=$(this).serialize();
 
-                    },
+                    $.ajax({
+                        type:'POST',
+                        url: "{% url 'post_bill' %}",
+                        data: serForm,
+                        success:function (response){
+                            //reset form
+                            $("#bill_form")[0].reset();
 
-                    /*
-                    if the the request didn't work
-                     */
-                    error:function (response){
+                            alert("SUCCESS\nBill added with success.")
+                            console.log("Bill added")
 
-                        if(
-                            ((response.statusCode()==204)||(response.statusCode()==206))
-                         &&  !((response.statusCode()==204)&&(response.statusCode()==206))
-                        ){
-                            alert("ERROR\nThe request has been rejected.\n" +
+                        },
+
+                        /*
+                        if the the request didn't work
+                        */
+                        error:function (response){
+
+                            if(
+                                ((response.statusCode()==204)||(response.statusCode()==206))
+                                &&  !((response.statusCode()==204)&&(response.statusCode()==206))
+                            ){
+                                alert("ERROR\nThe request has been rejected.\n" +
                                 "The car ID may be invalid or the selected car is already sold.")
 
-                            console.log("Rejected request")
-                        }
-                        else{
-                            alert("ERROR\n Something wrong happened.")
-                            console.log("Something wrong happened")
-                            console.log(response)
-                        }
+                                console.log("Rejected request")
+                            }
+                            else{
+                                alert("ERROR\n Something wrong happened.")
+                                console.log("Something wrong happened")
+                                console.log(response)
+                            }
 
-                    }
-                })
+                        }
+                    })
 
             })
-        })
+
+
+        });
 
 
     </script>
-
-
-
 {% endblock %}
+
+
