@@ -1,5 +1,4 @@
 {% extends "SelectByID.html" %}
-
 {% block titleValue %}Select Car by ID{% endblock %}
 
 {% block labelID %}carIDLabel{% endblock %}
@@ -28,6 +27,7 @@
 
 
 {% block script %}
+
     <script>
     $(document).ready(function (){
 
@@ -71,7 +71,7 @@
         });
 
 
-
+    
 function getConditionValue(conditionIndex){
         var conditionvalue;
         switch (conditionIndex){
@@ -96,11 +96,9 @@ function getConditionValue(conditionIndex){
             default:
                 conditionvalue="NULL";
                 break;
-
         }
         return conditionvalue
     }
-
     </script>
 
 {% endblock %}
