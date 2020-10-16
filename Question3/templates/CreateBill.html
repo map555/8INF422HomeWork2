@@ -21,46 +21,56 @@
 
 
 {% block scriptBlock %}
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"  crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" ></script>
 
     <script type="text/javascript">
         $(document).ready(function(){
-            $("#bill_form").submit(function(e){
+            $("#bill_form").submit(function (e){
 
                 e.preventDefault();
 
                 //serialize form
-                var serializedBillForm=$(this).serialize();
+                var serForm=$(this).serialize();
+
                 $.ajax({
                     type:'POST',
                     url: "{% url 'post_bill' %}",
-                    data:serializedBillForm,
-                    succes:function(response){
+                    data: serForm,
+                    success:function (response){
                         //reset form
-                        if(response.statusCode()==200){
-                            alert("Bill added with success.")
-                        }
+                        $("#bill_form")[0].reset();
+
+                        alert("SUCCESS\nBill added with success.")
+                        console.log("Bill added")
 
                     },
-                    error: function(response){
-                        //XOR
-                        if ((response.statusCode()==204 || response.statusCode==206)
-                        && !(response.statusCode()==204 && response.statusCode==206)){
-                            alert("Error! The car is already sold or the car ID is invalid. ")
+
+                    /*
+                    if the the request didn't work
+                     */
+                    error:function (response){
+
+                        if(
+                            ((response.statusCode()==204)||(response.statusCode()==206))
+                         &&  !((response.statusCode()==204)&&(response.statusCode()==206))
+                        ){
+                            alert("ERROR\nThe request has been rejected.\n" +
+                                "The car ID may be invalid or the selected car is already sold.")
+
+                            console.log("Rejected request")
                         }
                         else{
-                            alert("Error! Something happen.")
+                            alert("ERROR\n Something wrong happened.")
+                            console.log("Something wrong happened")
                             console.log(response)
                         }
+
                     }
-
-
-
-
                 })
 
             })
-        });
+        })
+
 
     </script>
 
