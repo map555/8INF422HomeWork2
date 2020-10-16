@@ -21,20 +21,12 @@ from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',views.Home,name="home"),
+    path('car/carbyid',views.CarByIDHome,name="car_by_id_home"),
+    path('ajax/get_car_info_by_id',views.get_car_info_by_id,name="get_car_info_by_id"),
+    path('bills/create_bill',views.BillFormView,name="create_bill"),
+    path('ajax/create_bill',views.PostBillForm,name="post_bill")
 
-    path('home/'),
-
-    path('home/car'),
-
-    path('home/car/<int:carID>',views.CarByID,name='CarByID'),
-
-    path('home/car/<str:manufacturer>',views.CarByManufacturer,name='CarByManufacturer'),
-
-    path('home/bill'),
-
-    path('home/bill/<int:billID>',views.BillByID,name="BillByID"),
-
-    path('home/bill/<str:client>',views.BillByClient,name='BillByClient')
 
 
 ]+ static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

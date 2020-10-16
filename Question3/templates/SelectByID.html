@@ -1,36 +1,43 @@
-{% extends 'MenuBar.html' %}
+{% extends "MenuBar.html" %}
 {% block maincontent %}
-
-    <h1>{% block selectByIDTitle %}{% endblock %}</h1>
+    <h1>{% block titleValue %}{% endblock %}</h1>
 
     <br>
 
-    <form method="get" id={% block formID %}{% endblock %}>
+
 
         <div class="form-group">
-            <label for="IDInputLabel">{% block idInputLabel %}{% endblock %}</label>
-            <input type="number" class="form-text" id={% block idInputID %}{% endblock %} aria-describedby="Insert_ID_Here" min="0">
-            <small id="IDHelp" class="form-text text-muted">{% block idHelpMessage %}{% endblock %}</small>
+            <label for="IDInputLabel" id="{% block labelID %}{% endblock %}">
+                <input type="number" class="form-text" id="{% block inputID %}{% endblock %}" aria-describedby="Insert_ID_Here"
+                       min="0" value="{% block messageInputValue %}{% endblock %}">
+                <input type="submit" class="btn btn-primary" id="{% block submitButtonID %}{% endblock %}" value="send">
+            </label>
+            <small id="IDHelp" class="form-text text-muted">{% block helpContent %}{% endblock %}</small>
         </div>
 
-        <button type="submit" class="btn btn-primary">Submit</button>
 
-    </form>
 
-    <table class="table table-sm responsive">
+
+    <table class="table table-sm responsive" id="resulttable">
       <thead>
         <tr>
 
-            {% block tableColumnName %}
-            {% endblock %}
+                {% block tableHead %}
+                {% endblock %}
+
         </tr>
       </thead>
-      <tbody>
 
-            {% block tableBody %}
-            {% endblock %}
+    <tbody>
 
-      </tbody>
+
+
+   </tbody>
+
+
     </table>
+
+    {% block script %}
+    {% endblock %}
 
 {% endblock %}

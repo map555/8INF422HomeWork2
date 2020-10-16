@@ -1,0 +1,69 @@
+{% extends "Create.html" %}
+
+{% block titleValue %}Create a bill{% endblock %}
+
+{% block formID %}bill_form{% endblock %}
+
+{% block form %}
+    {% load widget_tweaks %}
+
+        {%   render_field billform.buyerName class+="form-text"  %}
+        {{ billform.buyerName.errors  }}
+         {%   render_field billform.carId class+="form-text"  %}
+        {{ billform.carId.errors  }}
+
+
+
+{% endblock %}
+
+{% block submitButtonID %}send_form_button {% endblock %}
+
+
+
+{% block scriptBlock %}
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"  crossorigin="anonymous"></script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $("#bill_form").submit(function(e){
+
+                e.preventDefault();
+
+                //serialize form
+                var serializedBillForm=$(this).serialize();
+                $.ajax({
+                    type:'POST',
+                    url: "{% url 'post_bill' %}",
+                    data:serializedBillForm,
+                    succes:function(response){
+                        //reset form
+                        if(response.statusCode()==200){
+                            alert("Bill added with success.")
+                        }
+
+                    },
+                    error: function(response){
+                        //XOR
+                        if ((response.statusCode()==204 || response.statusCode==206)
+                        && !(response.statusCode()==204 && response.statusCode==206)){
+                            alert("Error! The car is already sold or the car ID is invalid. ")
+                        }
+                        else{
+                            alert("Error! Something happen.")
+                            console.log(response)
+                        }
+                    }
+
+
+
+
+                })
+
+            })
+        });
+
+    </script>
+
+
+
+{% endblock %}
