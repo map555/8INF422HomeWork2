@@ -11,7 +11,7 @@ $(document).ready(function (){
 
                 $.ajax({
                         type: "GET",
-                        url:"{% url 'get_car_info_by_id' %}",
+                        url:"/ajax/get_car_info_by_id",
                         data: {car_id:car_id},
                         success:function(response){
 
