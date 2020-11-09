@@ -39,6 +39,8 @@ $(document).ready(function (){
             })
         });
 
+
+
 function getConditionValue(conditionIndex){
         var conditionvalue;
         switch (conditionIndex){
@@ -59,6 +61,9 @@ function getConditionValue(conditionIndex){
                 break;
             case "6":
                 conditionvalue="showroom";
+                break;
+            default:
+                conditionvalue="NULL";
                 break;
         }
         return conditionvalue

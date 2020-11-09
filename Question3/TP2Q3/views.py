@@ -1,8 +1,12 @@
+import json
+
 from django.shortcuts import render
 from TP2Q3.models import *
 from TP2Q3.forms import *
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
+from django.core import  serializers
+from django.core.serializers.json import DjangoJSONEncoder
 # Create your views here.
 
 def Home(request):
@@ -57,21 +61,26 @@ def BillByID(request,billID):
     bill=Bill.objects.filter(id=billID).select_related('Car').values('clientName','Car__manufacturer',
             'Car__model','Car__trim','Car__mileage','Car__year','Car__weight','Car__condition','Car__color','Car__price')
 
-def BillByClient(request,client):
-    bills=Bill.objects.filter(clientName=client).select_related('Car').order_by('Car__manufacturer','Car__model').values(
-        'clientName', 'Car__manufacturer','Car__model', 'Car__trim', 'Car__mileage', 'Car__year', 'Car__weight',
-        'Car__condition', 'Car__color','Car__price')
+
+
+
+
+
 
 def BillFormView(request):
     billForm=BillForm()
     return render(request,'CreateBill.html',{"billform":billForm})
 
+
+
 def PostBillForm(request):
+    status = 400
     if request.method == "POST" and request.is_ajax():
         requestCarID=request.POST['carId']
         requestBuyerName=request.POST['buyerName']
 
         requestCar=None
+
 
         #Try to get the car of the form.
         try:
@@ -92,14 +101,23 @@ def PostBillForm(request):
                 newBill.clientName=requestBuyerName
                 newBill.Car=requestCar
                 newBill.save()
-                return JsonResponse({"success":True}, status=200)#valid good request
+
+                status=201# request status
+                return JsonResponse({"requestsuccess":True, "status":status}, status=status)#valid good request
 
 
             else:
-                return JsonResponse({"success":False}, status=206)#car was found but sold is true
+                status=206
+                return JsonResponse({"requestsuccess":False, "status":status}, status=status)#car was found but sold is true
 
         else:
-            return JsonResponse({"success":False}, status=204)#car was not found
+            status=206
+            return JsonResponse({"requestsuccess":False,"status":204}, status=status)#car was not found
 
 
-    return JsonResponse({"success":False},status=400)#bad request
+    return JsonResponse({"requestsuccess":False,"status":status},status=status)#bad request
+
+
+
+
+
