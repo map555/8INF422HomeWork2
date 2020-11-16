@@ -22,10 +22,15 @@ from django.conf import settings
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.Home,name="home"),
+    path('bills/billbyid', views.BillByIDHome, name="bill_by_id_home"),
     path('car/carbyid',views.CarByIDHome,name="car_by_id_home"),
     path('ajax/get_car_info_by_id',views.get_car_info_by_id,name="get_car_info_by_id"),
+    path('ajax/get_bill_info_by_id', views.get_bill_info_by_id, name="get_bill_info_by_id"),
     path('bills/create_bill',views.BillFormView,name="create_bill"),
-    path('ajax/create_bill',views.PostBillForm,name="post_bill")
+    path('cars/create_car', views.CarFormView, name="create_car"),
+    path('ajax/create_bill',views.PostBillForm,name="post_bill"),
+    path('ajax/create_car', views.CarFormView, name="post_car"),
+    path('cars/car_created', views.CarCreated, name="car_created")
 
 
 

@@ -1,0 +1,28 @@
+{% extends "SelectByID.html" %}
+{% load static %}
+{% block titleValue %}Select Bill by ID{% endblock %}
+
+{% block labelID %}billIDLabel{% endblock %}
+
+{% block inputID %}bill_id{% endblock %}
+
+{% block messageInputValue %}Insert bill ID here{% endblock %}
+
+{% block submitButtonID %}send_bill_id{% endblock %}
+
+{% block helpContent %}If the result row is filled with "NULL", the bill ID is invalid.{% endblock %}
+
+{% block tableHead %}
+
+    <th scope="col">ID</th>
+    <th scope="col">Client</th>
+    <th scope="col">Car price</th>
+
+{% endblock %}
+
+
+{% block script %}
+    <script  src="{% static 'js/BillByID.js' %}"></script>
+
+
+{% endblock %}

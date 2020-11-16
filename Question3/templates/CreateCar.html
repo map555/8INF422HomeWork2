@@ -1,0 +1,18 @@
+{% extends "Create.html" %}
+{% load static %}
+
+{% block titleValue %}Add a car{% endblock %}
+
+{% block formID %}addCarForm{% endblock %}
+
+{% block form %}
+    {% load widget_tweaks %}
+
+    <form method="POST" class="AddCarForm">{% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="save btn btn-default">Save</button>
+    </form>
+
+{% endblock %}
+
+{% block submitButtonID %}send_form_button {% endblock %}

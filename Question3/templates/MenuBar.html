@@ -24,7 +24,7 @@
           Cars
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Add a car</a>
+          <a class="dropdown-item" href="{% url 'create_car' %}">Add a car</a>
           <a class="dropdown-item" href="{% url 'car_by_id_home' %}">Select cars by ID</a>
           <a class="dropdown-item" href="#">Select cars by manufacturer</a>
         </div>
@@ -35,7 +35,7 @@
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="{% url 'create_bill' %}">Add a bill</a>
-          <a class="dropdown-item" href="#">Select bills by ID</a>
+          <a class="dropdown-item" href="{% url 'bill_by_id_home' %}">Select bills by ID</a>
           <a class="dropdown-item" href="#">Select bills by client</a>
         </div>
       </li>
