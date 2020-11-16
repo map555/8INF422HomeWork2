@@ -1,18 +1,19 @@
-{% extends "Create.html" %}
-{% load static %}
+{% extends "MenuBar.html" %}
+{% block maincontent %}
+    <h1>{% block titleValue %}Add a car{% endblock %}</h1>
 
-{% block titleValue %}Add a car{% endblock %}
+    <br>
+        <div class="form-group">
+            <form class="AddCarForm" method="post">{% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" class="btn btn-primary" id="{% block submitButtonID %}{% endblock %}" value="send">
+            </form>
+        </div>
 
-{% block formID %}addCarForm{% endblock %}
 
-{% block form %}
-    {% load widget_tweaks %}
+    {% block scriptBlock %}{% endblock %}
 
-    <form method="POST" class="AddCarForm">{% csrf_token %}
-          {{ form.as_p }}
-          <button type="submit" class="save btn btn-default">Save</button>
-    </form>
+
+
 
 {% endblock %}
-
-{% block submitButtonID %}send_form_button {% endblock %}
