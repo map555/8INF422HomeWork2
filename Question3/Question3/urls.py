@@ -32,9 +32,8 @@ urlpatterns = [
     path('cars/create_car', views.CarFormView, name="create_car"),
     path('ajax/create_bill',views.PostBillForm,name="post_bill"),
     path('ajax/create_car', views.CarFormView, name="post_car"),
-    path('cars/car_created', views.CarCreated, name="car_created")
-
-
-
+    path('cars/car_created', views.CarCreated, name="car_created"),
+    path('bills/select_by_client',views.BillsByClientView,name="bills_by_client_home"),
+    path('ajax/BillsByClient', views.BillsByClient, name="bills_by_client")
 
 ]+ static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

@@ -207,3 +207,18 @@ def PostBillForm(request):
             return JsonResponse({"requestsuccess": False, "status": 204}, status=status)  # car was not found
 
     return JsonResponse({"requestsuccess": False, "status": status}, status=status)  # bad request
+
+
+def BillsByClientView(request):
+    return render(request,"SelectBillsByClient.html")
+
+
+
+def BillsByClient(request):
+    if request.method == "GET" and request.is_ajax():
+        bills=Bill.objects.filter(clientName=request.GET.get("client_name")).select_related('Car').order_by('id').values(
+             'id','Car__manufacturer','Car__model', 'Car__trim','Car__year', 'Car__mileage','Car__color','Car__price')
+
+        return JsonResponse({"bills":list(bills)},status=200)
+
+    return JsonResponse({"success":False},status=400)
