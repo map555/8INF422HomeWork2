@@ -1,8 +1,8 @@
 import json
 
 from django.shortcuts import render
-from TP2Q3.models import *
-from TP2Q3.forms import *
+from Question3.TP2Q3.models import *
+from Question3.TP2Q3.forms import *
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
@@ -12,9 +12,48 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 # Create your views here.
 
+
 def Home(request):
     return render(request, "MenuBar.html")
 
+def CarByManufacturerHome(request):
+    return render(request,)
+
+def get_car_info_by_manufacturer(request):
+    if request.method == "GET" and request.is_ajax():
+
+        requestCar = None
+
+        # try to get the car
+        try:
+            requestCar = Car.objects.get(id=request.GET.get("car_manufacturer"), sold=False)
+        except(ObjectDoesNotExist):
+            requestCar = None
+
+        if (requestCar != None):
+            car_info = {'manufacturer': requestCar.manufacturer,
+                        'model': requestCar.model,
+                        'cartrim': requestCar.trim,
+                        'mileage': requestCar.mileage,
+                        'caryear': requestCar.year,
+                        'carweight': requestCar.weight,
+                        'condition': requestCar.condition,
+                        'carcolor': requestCar.color,
+                        'price': requestCar.price}
+        else:
+            car_info = {'manufacturer': "NULL",
+                        'model': "NULL",
+                        'cartrim': "NULL",
+                        'mileage': "NULL",
+                        'caryear': "NULL",
+                        'carweight': "NULL",
+                        'condition': "NULL",
+                        'carcolor': "NULL",
+                        'price': "NULL"}
+
+        return JsonResponse({"car_info": car_info}, status=200)
+
+    return JsonResponse({"success": False}, status=400)
 
 def CarByIDHome(request):
     return render(request, "CarByID.html")
