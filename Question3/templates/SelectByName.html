@@ -1,0 +1,42 @@
+{% extends "MenuBar.html" %}
+{% block maincontent %}
+    <h1>{% block titleValue %}{% endblock %}</h1>
+
+    <br>
+
+
+
+        <div class="form-group">
+            <label for="IDInputLabel" id="{% block labelID %}{% endblock %}">
+                <input class="form-text" id="{% block inputID %}{% endblock %}">
+                <input type="submit" class="btn btn-primary" id="{% block submitButtonID %}{% endblock %}" value="send">
+            </label>
+        </div>
+
+
+    <br>
+    <h3 id="ResultTitle">Result for: </h3>
+
+    <table class="table table-sm responsive" id="resulttable">
+      <thead>
+        <tr>
+
+                {% block tableHead %}
+                {% endblock %}
+
+        </tr>
+      </thead>
+
+    <tbody id="result_tbody">
+
+
+
+   </tbody>
+
+
+    </table>
+
+    {% block script %}
+    {% endblock %}
+
+{% endblock %}
