@@ -53,8 +53,8 @@ function FillTBody(tbodyID,data){
     var htmlrow="";
     for(var i=0; i<data.length;i++){
         htmlrow="<tr id="+i+"><td>"+data[i].id+"</td><td>"+data[i].Car__manufacturer+"</td><td>"+
-                data[i].Car__model+"</td><td>"+data[i].Car__trim+"</td><td>"+data[i].Car__mileage+
-                "</td><td>"+data[i].Car__year+"</td><td>"+data[i].Car__color+"</td><td>"+data[i].Car__price+"</td></tr>";
+                data[i].Car__model+"</td><td>"+data[i].Car__trim+"</td><td>"+data[i].Car__year+
+                "</td><td>"+data[i].Car__mileage+"</td><td>"+data[i].Car__color+"</td><td>"+data[i].Car__price+"</td></tr>";
 
 
 

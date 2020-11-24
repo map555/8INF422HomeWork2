@@ -19,7 +19,14 @@ $(document).ready(function (){
                             $("#resulttable tbody").html(`<tr>
                                 <td id="IDResult">${response.bill_info.id}</td>
                                 <td id="ClientResult">${response.bill_info.clientName}</td>
-                                <td id="CarResult">${response.bill_info.carPrice}</td>
+                                <td id="CarResult">${response.bill_info.Car__manufacturer}</td>
+                                <td id="CarResult">${response.bill_info.Car__model}</td>
+                                <td id="CarResult">${response.bill_info.Car__trim}</td>
+                                <td id="CarResult">${response.bill_info.Car__year}</td>
+                                <td id="CarResult">${response.bill_info.Car__color}</td>
+                                <td id="CarResult">${response.bill_info.Car__mileage}</td>
+                                <td id="CarResult">${response.bill_info.Car__price}</td>
+
                                 </tr>`)
 
                         },

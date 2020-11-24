@@ -28,26 +28,13 @@
                             {
 
                                 //the car was already sold or the car id doesn't exist
-                                if(response.status==2)
-                                {
+
                                      alert("ERROR\nThe request has been rejected.\n" +
                                     "The car ID may be invalid or the selected car is already sold.")
 
                                     console.log("Rejected request")
-                                }
-                                else //error
-                                {
-
-                                    alert("ERROR\n Something wrong happened.")
-                                    console.log("Something wrong happened")
-                                    console.log(response)
-                                }
-
 
                             }
-
-
-
                         },
 
                         /*

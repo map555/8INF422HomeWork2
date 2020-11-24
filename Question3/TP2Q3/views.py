@@ -6,8 +6,7 @@ from TP2Q3.forms import *
 from django.http import JsonResponse
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import redirect
-from django.core import serializers
-from django.core.serializers.json import DjangoJSONEncoder
+
 
 
 # Create your views here.
@@ -116,38 +115,33 @@ def get_bill_info_by_id(request):
         requestBill = None
 
         # try to get the car
-        try:
-            requestBill = Bill.objects.get(id=request.GET.get("bill_id"))
-        except(ObjectDoesNotExist):
-            requestBill = None
+        billid=int(request.GET.get('bill_id'))
+        requestBill = Bill.objects.all().filter(id=billid).select_related('Car')\
+            .values('id','clientName','Car__manufacturer','Car__model','Car__trim','Car__year',
+                   'Car__color','Car__mileage','Car__price')
 
-        if (requestBill != None):
-            requestCar = Car.objects.get(id=requestBill.Car.id)
-            bill_info = {'id': requestBill.id,
-                         'clientName': requestBill.clientName,
-                         'carPrice': requestCar.price}
-        else:
-            bill_info = {'id': "NULL",
-                         'clientName': "NULL",
-                         'carPrice': "NULL"}
+        exist=requestBill.exists()
 
-        return JsonResponse({"bill_info": bill_info}, status=200)
+        #if the request return nothing
+        if(exist==False):
+            requestBill={'id':"NULL",
+             'clientName':"NULL",
+             'Car__manufacturer':"NULL",
+             'Car__model':"NULL",
+             'Car__trim':"NULL",
+             'Car__year':"NULL",
+             'Car__color':"NULL",
+             'Car__mileage':"NULL",
+             'Car__price':"NULL"}
+
+            return JsonResponse({"bill_info": requestBill}, status=200)
+
+        return JsonResponse({"bill_info": list(requestBill)[0]}, status=200)
 
     return JsonResponse({"success": False}, status=400)
 
 
-def CarByManufacturer(request, CarManufacturer):
-    cars = Car.objects.filter(manufacturer=CarManufacturer).order__by('model').values('model',
-                                                                                      'trim', 'mileage', 'year',
-                                                                                      'weight', 'condition', 'color',
-                                                                                      'price')
 
-
-def BillByID(request, billID):
-    bill = Bill.objects.filter(id=billID).select_related('Car').values('clientName', 'Car__manufacturer',
-                                                                       'Car__model', 'Car__trim', 'Car__mileage',
-                                                                       'Car__year', 'Car__weight', 'Car__condition',
-                                                                       'Car__color', 'Car__price')
 
 
 def CarFormView(request):
@@ -174,7 +168,7 @@ def PostBillForm(request):
         requestBuyerName = request.POST['buyerName']
 
         requestCar = None
-
+        status=200
         # Try to get the car of the form.
         try:
             requestCar = Car.objects.get(id=requestCarID)
@@ -193,20 +187,17 @@ def PostBillForm(request):
                 newBill.Car = requestCar
                 newBill.save()
 
-                status = 201  # request status
-                return JsonResponse({"requestsuccess": True, "status": status}, status=status)  # valid good request
+                return JsonResponse({"requestsuccess": True}, status=status)  # valid good request
 
 
             else:
-                status = 206
-                return JsonResponse({"requestsuccess": False, "status": status},
+                return JsonResponse({"requestsuccess": False},
                                     status=status)  # car was found but sold is true
 
         else:
-            status = 206
-            return JsonResponse({"requestsuccess": False, "status": 204}, status=status)  # car was not found
+            return JsonResponse({"requestsuccess": False}, status=status)  # car was not found
 
-    return JsonResponse({"requestsuccess": False, "status": status}, status=status)  # bad request
+    return JsonResponse({"requestsuccess": False}, status=status)  # bad request
 
 
 def BillsByClientView(request):
@@ -216,6 +207,7 @@ def BillsByClientView(request):
 
 def BillsByClient(request):
     if request.method == "GET" and request.is_ajax():
+        
         bills=Bill.objects.filter(clientName=request.GET.get("client_name")).select_related('Car').order_by('id').values(
              'id','Car__manufacturer','Car__model', 'Car__trim','Car__year', 'Car__mileage','Car__color','Car__price')
 

@@ -19,6 +19,10 @@ $(document).ready(function (){
 
                         console.log(response.car_info)
 
+                        //change result title
+                            var resultTitle=document.getElementById("ResultTitle")
+                            resultTitle.innerText="Result for: "+car_manufacturer
+
                         for (i = 0; i < response.car_info.length; i++){
                             car = response.car_info[i]
                             car.condition = getConditionValue(car.condition)
