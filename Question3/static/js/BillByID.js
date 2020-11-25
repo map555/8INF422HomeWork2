@@ -23,8 +23,8 @@ $(document).ready(function (){
                                 <td id="CarResult">${response.bill_info.Car__model}</td>
                                 <td id="CarResult">${response.bill_info.Car__trim}</td>
                                 <td id="CarResult">${response.bill_info.Car__year}</td>
-                                <td id="CarResult">${response.bill_info.Car__color}</td>
                                 <td id="CarResult">${response.bill_info.Car__mileage}</td>
+                                <td id="CarResult">${response.bill_info.Car__color}</td>              
                                 <td id="CarResult">${response.bill_info.Car__price}</td>
 
                                 </tr>`)
